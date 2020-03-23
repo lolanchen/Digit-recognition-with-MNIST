@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image, ImageOps
-from tensorflow import keras
+
 
 def normalize_image(path):
     img = Image.open(path).resize((28,28)) #resize
