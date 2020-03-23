@@ -1,7 +1,9 @@
 import tensorflow as tf
 from tensorflow import keras
 from normalize import normalize_image
-import sys
+from PIL import Image
+import os
+
 
 (train_images, train_labels), (test_images, test_labels) =  keras.datasets.mnist.load_data()
 train_images =  train_images/255.0
@@ -9,28 +11,26 @@ test_images = test_images/255.0
 
 model = keras.Sequential([
     keras.layers.Flatten(),
-    keras.layers.Dense(256, activation = tf.nn.relu),
+    keras.layers.Dense(128, activation = tf.nn.relu),
+    keras.layers.Dense(128, activation = tf.nn.relu),
     keras.layers.Dense(10, activation = tf.nn.softmax),
 ])
-
 model.compile(
     optimizer = 'adam', 
     loss = 'sparse_categorical_crossentropy', 
     metrics = ['accuracy']
 )
-model.fit(train_images, train_labels, epochs = 5)
-
+model.fit(train_images, train_labels, epochs = 3)
 model.evaluate(test_images, test_labels)
 
-img3 = normalize_image('3.jpeg').reshape(1,28,28,1)
-img5 = normalize_image('5.jpeg').reshape(1,28,28,1)
-img6 = normalize_image('6.jpeg').reshape(1,28,28,1)
 
+my_pics = []
+path = './my_pics'
+for r,d,f in os.walk(path):
+    for file in f:
+        img =  normalize_image('my_pics/' + file).reshape(1,28,28,1) #reshape(#pic, W, H, channels)
+        my_pics.append(img)
 
-print(model.predict_classes(img3))
-print(model.predict_classes(img5))
-print(model.predict_classes(img6))
-
-
-
-#model.evaluate(test_images, test_labels)
+for img in my_pics:
+    print(model.predict_classes(img))
+ 

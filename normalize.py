@@ -1,9 +1,11 @@
 import numpy as np
-from PIL import Image
-
+from PIL import Image, ImageOps
+from tensorflow import keras
 
 def normalize_image(path):
-    image = Image.open(path).resize((28,28))
-    image = Image.Image.convert(image, "L")
-    image = np.array(image)/255.0
-    return image
+    img = Image.open(path).resize((28,28)) #resize
+    img = Image.Image.convert(img, "L")  #convert to grayscale
+    img = ImageOps.invert(img) #invert color
+    img = np.array(img)/255.0 #convert to ndarray
+    return img
+
