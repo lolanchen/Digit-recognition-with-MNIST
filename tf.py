@@ -20,6 +20,8 @@ model.compile(
 )
 model.fit(train_images, train_labels, epochs = 5)
 
+model.evaluate(test_images, test_labels)
+
 img3 = normalize_image('3.jpeg').reshape(1,28,28,1)
 img5 = normalize_image('5.jpeg').reshape(1,28,28,1)
 img6 = normalize_image('6.jpeg').reshape(1,28,28,1)
