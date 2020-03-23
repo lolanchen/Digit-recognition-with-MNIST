@@ -1,8 +1,8 @@
+import os
 import tensorflow as tf
 from tensorflow import keras
 from normalize import normalize_image
 from PIL import Image
-import os
 
 
 (train_images, train_labels), (test_images, test_labels) =  keras.datasets.mnist.load_data()
@@ -12,7 +12,6 @@ test_images = test_images/255.0
 model = keras.Sequential([
     keras.layers.Flatten(),
     keras.layers.Dense(128, activation = tf.nn.relu),
-    keras.layers.Dense(128, activation = tf.nn.relu),
     keras.layers.Dense(10, activation = tf.nn.softmax),
 ])
 model.compile(
@@ -21,7 +20,7 @@ model.compile(
     metrics = ['accuracy']
 )
 model.fit(train_images, train_labels, epochs = 3)
-model.evaluate(test_images, test_labels)
+#model.evaluate(test_images, test_labels)
 
 
 my_pics = []
